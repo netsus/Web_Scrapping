@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Search</title>
+    <style>
+        section {
+            display: grid;
+            gap:20px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+    </style>
 </head>
 <body>
     <h1>Search Results</h1>
-    <h3>You are looking for {{SearchingBy}}</h3>
+    <h3>Found {{resultNumber}} results for: {{SearchingBy}}</h3>
 </body>
-{{potato}}
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Location</th>
+        <th>Link</th>
+    </tr>
+    {% for job in jobs %}
+    <tr>
+        <td>{{job.title}}</td>
+        <td>{{job.company}}</td>
+        <td>{{job.location}}</td>
+        <td><a href="{{job.link}}" target="_blank">Apply</a></td>
+    </tr>
+    {% endfor %}
+</table>
 </html>

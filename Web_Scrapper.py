@@ -2,11 +2,7 @@ import pandas as pd
 import requests  # URL 가져오는 좋은 라이브러리
 from bs4 import BeautifulSoup  # HTML에서 원하는 정보 가져오기 좋은 라이브러리
 
-LIMIT = 50
-URL = f"https://www.indeed.com/jobs?q=python&limit={LIMIT}"
-def indeed_get_last_page():
-    
-    
+def indeed_get_last_page(URL):
     result = requests.get(URL)
 
     soup = BeautifulSoup(result.text, 'html.parser')
@@ -36,14 +32,14 @@ def indeed_extract_job(html):
         location = location['data-rc-loc']
     job_id = html["data-jk"]
     return {
-        'anchor_title': anchor_title,
+        'title': anchor_title,
         'company': company_name,
         'location': location,
         'link': f"https://www.indeed.com/viewjob?jk={job_id}"
     }
 
 
-def indeed_extract_jobs(last_page):
+def indeed_extract_jobs(last_page,URL,LIMIT):
     jobs = list()
     for page in range(last_page):
         print(f"Scrapping indeed Page: {page}")
@@ -55,16 +51,18 @@ def indeed_extract_jobs(last_page):
             jobs.append(job)
     return jobs
 
-def indeed_get_jobs():
-    last_page = indeed_get_last_page()
-    jobs = indeed_extract_jobs(last_page)
+def indeed_get_jobs(word):
+    LIMIT = 50
+    URL = f"https://www.indeed.com/jobs?q={word}&limit={LIMIT}"
+    last_page = indeed_get_last_page(URL)
+    last_page = 2
+    jobs = indeed_extract_jobs(last_page,URL,LIMIT)
     return jobs
 
 import requests  # URL 가져오는 좋은 라이브러리
 from bs4 import BeautifulSoup  # HTML에서 원하는 정보 가져오기 좋은 라이브러리
 
 def SO_get_last_page():
-    URL = f"https://stackoverflow.com/jobs?q=python&sort=i"
     result = requests.get(URL)
     soup = BeautifulSoup(result.text, 'lxml')
     links = soup.find("div", {'class': 's-pagination'}).find_all("a")
@@ -86,10 +84,10 @@ def SO_extract_job(html):
         'title': title,
         'company': company,
         'location': location,
-        'apply_link': f"https://stackoverflow.com/jobs/{job_id}"
+        'link': f"https://stackoverflow.com/jobs/{job_id}"
     }
 
-def SO_extract_jobs(last_page):
+def SO_extract_jobs(last_page,URL):
     jobs = []
     for page in range(last_page):
         print(f"Scrapping SO Page: {page}")
@@ -101,7 +99,8 @@ def SO_extract_jobs(last_page):
             jobs.append(job)
     return jobs
 
-def SO_get_jobs():
-    last_page = SO_get_last_page()
-    jobs = SO_extract_jobs(last_page)
+def SO_get_jobs(word):
+    URL = f"https://stackoverflow.com/jobs?q={word}&sort=i"
+    last_page = SO_get_last_page(URL)
+    jobs = SO_extract_jobs(last_page,URL)
     return jobs
