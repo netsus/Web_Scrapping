@@ -1,16 +1,30 @@
 import pandas as pd
 import requests  # URL 가져오는 좋은 라이브러리
 from bs4 import BeautifulSoup  # HTML에서 원하는 정보 가져오기 좋은 라이브러리
+import csv
+
+def save_to_file(word,jobs):
+    with open(f'{word}_jobs.csv',mode='w', encoding='utf-8',newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["company", "location","link", "job"])
+        for job in jobs:
+            row = list(job.values())
+#             import pdb;pdb.set_trace()
+            writer.writerow(row)
+    return True
 
 def indeed_get_last_page(URL):
     result = requests.get(URL)
 
     soup = BeautifulSoup(result.text, 'html.parser')
     pagination = soup.find('div', {'class': 'pagination'})
-    links = pagination.find_all('a')
+    if pagination:
+        links = pagination.find_all('a')
 
-    pages = [int(link.string) for link in links[:-1]]
-    max_page = pages[-1]
+        pages = [int(link.string) for link in links[:-1]]
+        max_page = pages[-1]
+    else:
+        max_page=0
 
     return max_page
 
@@ -62,11 +76,15 @@ def indeed_get_jobs(word):
 import requests  # URL 가져오는 좋은 라이브러리
 from bs4 import BeautifulSoup  # HTML에서 원하는 정보 가져오기 좋은 라이브러리
 
-def SO_get_last_page():
+def SO_get_last_page(URL):
     result = requests.get(URL)
     soup = BeautifulSoup(result.text, 'lxml')
-    links = soup.find("div", {'class': 's-pagination'}).find_all("a")
-    last_page = int(links[-2].get_text().strip())
+    links = soup.find("div", {'class': 's-pagination'})
+    if links:
+        links = links.find_all("a")
+        last_page = int(links[-2].get_text().strip())
+    else:
+        last_page = 0
     return last_page
 
 def SO_extract_job(html):
@@ -102,5 +120,6 @@ def SO_extract_jobs(last_page,URL):
 def SO_get_jobs(word):
     URL = f"https://stackoverflow.com/jobs?q={word}&sort=i"
     last_page = SO_get_last_page(URL)
+    last_page = 2
     jobs = SO_extract_jobs(last_page,URL)
     return jobs
