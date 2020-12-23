@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
+</head>
+
+<body class='vsc-initialized'>
+    <header>
+        <h1>CWJ News</h1>
+        <div>Order by: <strong>Popular</strong>|<a href="/?order_by=new">New</a></div>
+    </header>
+    <main>
+        {% for news in page_li %}
+        <div>
+            <div>
+                <a href="/{{news['objectID']}}">
+                    <h3>{{news['title']}}</h3>
+                </a>
+                (
+                <a href="{{news['url']}}">{{news['url']}}</a>
+                )
+            </div>
+            <div>
+                {{news['points']}} points / By: {{news['author']}} / {{news['num_comments']}} comments
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </main>
+</body>
+
+</html>

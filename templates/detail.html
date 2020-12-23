@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
+</head>
+
+<body>
+    <header>
+        <h1>{{news['title']}}</h1>
+        <div>
+            {{news['points']}} points | By: {{news['author']}} |
+            <a href="{{news['url']}}">{{news['url']}}</a>
+        </div>
+    </header>
+    <main>
+        {% for line in df.itertuples() %}
+        <div>
+            <strong>{{line.author}}</strong>
+            <p></p>
+            {% autoescape false %}
+            {{line.text}}
+            {% endautoescape %}
+            <p></p>
+        </div>
+        <hr>
+        {% endfor %}
+</body>
+
+</html>
