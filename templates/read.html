@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
+</head>
+
+<body class='vsc-initialized'>
+  <header>
+    <h1>
+      <a href="/">Reddit Reader</a>
+    </h1>
+    <h3>Reading: 
+      {% for item in on_li %}
+      r/{{item}} 
+      {% endfor %}
+    </h3>
+  </header>
+  <main>
+    {% for line in df.itertuples() %}
+    <div>
+      <h3>
+        <a href="{{line.link}}" target="_blank">
+          {{line.title}}
+      </a>
+    </h3>
+    <h4>{{line.vote}} upvotes · {{line.kind}}</h4>
+    </div>
+    <hr>
+    {% endfor %}
+  </main>
+  
+</body>
+
+</html>
