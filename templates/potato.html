@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width:400px;
+        }
+        button {
+            width:200px;
+        }
+    </style>
+    <title>Job Search</title>
+</head>
+<body>
+    <header>
+    <h1>Job Search</h1>
+    </header>
+    <main>
+    <form action="/report" method="GET">
+        <input placeholder='Search for a job' required name="word"/>
+        <button>Search</button>
+    </form>
+    </main>
+    
+</body>
+</html>

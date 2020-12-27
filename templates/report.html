@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
+    <style>
+        main {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            width:100vw;
+            max-width:100vw;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <h1>Search Results</h1>
+    <h3>{{resultNumber}} {{SearchingBy}} Steve Jobs found.</h3>
+    <div><a href="/export?word={{SearchingBy}}">Export to CSV</a></div>
+    <div><a href="/"><- Go back</a></div>
+    
+    
+    </header>
+    <main>
+    <table border="1"; border-collapse="collapse">
+        <tr>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Link</th>
+        </tr>
+        {% for job in jobs:%}
+        <tr>
+            <td>{{job.title}}</td>
+            <td>{{job.company}}</td>
+            <td><a href="{{job.link}}" target='_blank'>Apply</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    </main>
+</body>
+</html>
