@@ -66,10 +66,10 @@ def indeed_extract_jobs(last_page,URL,LIMIT):
     return jobs
 
 def indeed_get_jobs(word):
-    LIMIT = 50
+    LIMIT = 25
     URL = f"https://www.indeed.com/jobs?q={word}&limit={LIMIT}"
     last_page = indeed_get_last_page(URL)
-    last_page = 2
+    last_page = 1
     jobs = indeed_extract_jobs(last_page,URL,LIMIT)
     return jobs
 
@@ -120,6 +120,6 @@ def SO_extract_jobs(last_page,URL):
 def SO_get_jobs(word):
     URL = f"https://stackoverflow.com/jobs?q={word}&sort=i"
     last_page = SO_get_last_page(URL)
-    last_page = 2
+    last_page = 1
     jobs = SO_extract_jobs(last_page,URL)
     return jobs
